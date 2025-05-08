@@ -1,7 +1,7 @@
 export default function NotFound() {
     return(
       <>
-      <h1>Home</h1>
+      <h1>NOT FOUND :/</h1>
       </>
     )
   }
