@@ -34,7 +34,8 @@ export default function Login() {
           </Link>
 
           <form className="w-full md:max-w-xl my-8 p-4 bg-white rounded-md" onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-2">
+            
+            <div className="mb-3">
               <Input
                type="email"
                placeholder="Digite seu email"
@@ -44,7 +45,7 @@ export default function Login() {
               />
             </div>
 
-            <div className="mb-2">
+            <div className="mb-3">
               <Input
                type="password"
                placeholder="Digite sua senha"
@@ -60,6 +61,10 @@ export default function Login() {
             </button>
 
           </form>
+
+          <Link className=" text-zinc-600 underline" to={"/register"}>
+                Não Já possiu uma conta? Registre-se agora!
+          </Link>
         </div>
       </Container>
     )

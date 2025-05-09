@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 
 export function Container({children}: {children: ReactNode}) {
   return(
-    <div className="w-full max-w-7xl mx-auto px-4 pt-20">
+    <div className="w-full max-w-7xl mx-auto px-4 pt-20 fadeIn">
       {children}
     </div>
   )

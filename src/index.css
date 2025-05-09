@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-* {
+.fadeIn {
   animation: fadeIn .1s;
 }
 
