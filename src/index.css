@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+* {
+  animation: fadeIn .1s;
+}
+
 body {
   background-color: #F1F5F9;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
