@@ -1,7 +1,7 @@
 export default function NewCar() {
-    return(
-      <>
+  return (
+    <>
       <h1>Cadastrar novo carro</h1>
-      </>
-    )
-  }
+    </>
+  );
+}

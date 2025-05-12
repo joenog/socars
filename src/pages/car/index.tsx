@@ -1,7 +1,7 @@
 export default function CarDetail() {
-    return(
-      <>
+  return (
+    <>
       <h1>car detail</h1>
-      </>
-    )
-  }
+    </>
+  );
+}

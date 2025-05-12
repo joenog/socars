@@ -1,71 +1,97 @@
 import { Container } from "../../components/container";
 import logoImg from "../../assets/socars-logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/input";
+import { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import { auth } from "../../services/firebase/firebaseConnection";
+import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export default function Login() {
-
+  const navigate = useNavigate();
   const schema = z.object({
-    email: z.string().email("Insira um email válido!").nonempty("O campo email é obrigatório!"),
-    password: z.string().nonempty("O campo senha é obrigatório!")
-  })
+    email: z
+      .string()
+      .email("Insira um email válido!")
+      .nonempty("O campo email é obrigatório!"),
+    password: z.string().nonempty("O campo senha é obrigatório!"),
+  });
 
-  type FormData = z.infer<typeof schema>
+  useEffect(() => {
+    async function handleLogOut() {
+      await signOut(auth);
+    }
+    handleLogOut();
+  }, []);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+  type FormData = z.infer<typeof schema>;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
     resolver: zodResolver(schema),
-    mode: "onChange"
-  })
+    mode: "onChange",
+  });
 
   function onSubmit(data: FormData) {
-    console.log(data)
+    signInWithEmailAndPassword(auth, data.email, data.password)
+      .then((user) => {
+        console.log("Logado com sucesso!");
+        console.log(user);
+        navigate("/dashboard", { replace: true });
+      })
+      .catch((err) => {
+        console.log("Erro ao logar!");
+        console.error(err);
+      });
   }
 
-    return(
-      <Container>
-        <div className="flex flex-col w-full justify-center items-center gap-4">
-          <Link className="items-center mb-2" to={"/"}>
-            <img src={logoImg} alt="logo-site" />
-          </Link>
+  return (
+    <Container>
+      <div className="flex flex-col w-full justify-center items-center gap-4">
+        <Link className="items-center mb-2" to={"/"}>
+          <img src={logoImg} alt="logo-site" />
+        </Link>
 
-          <form className="w-full md:max-w-xl my-8 p-4 bg-white rounded-md" onSubmit={handleSubmit(onSubmit)}>
-            
-            <div className="mb-3">
-              <Input
-               type="email"
-               placeholder="Digite seu email"
-               name="email"
-               error={errors.email?.message}
-               register={register}
-              />
-            </div>
+        <form
+          className="w-full md:max-w-xl my-8 p-4 bg-white rounded-md"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="mb-3">
+            <Input
+              type="email"
+              placeholder="Digite seu email"
+              name="email"
+              error={errors.email?.message}
+              register={register}
+            />
+          </div>
 
-            <div className="mb-3">
-              <Input
-               type="password"
-               placeholder="Digite sua senha"
-               name="password"
-               error={errors.password?.message}
-               register={register}
-              />
-            </div>
+          <div className="mb-3">
+            <Input
+              type="password"
+              placeholder="Digite sua senha"
+              name="password"
+              error={errors.password?.message}
+              register={register}
+            />
+          </div>
 
+          <button className="w-full p-2 bg-gray-800 rounded-md text-white">
+            Acessar
+          </button>
+        </form>
 
-            <button className="w-full p-2 bg-gray-800 rounded-md text-white">
-              Acessar
-            </button>
-
-          </form>
-
-          <Link className=" text-zinc-600 underline" to={"/register"}>
-                Não Já possiu uma conta? Registre-se agora!
-          </Link>
-        </div>
-      </Container>
-    )
-  }
+        <Link className=" text-zinc-600 underline" to={"/register"}>
+          Não possiu uma conta? Registre-se agora!
+        </Link>
+      </div>
+    </Container>
+  );
+}
