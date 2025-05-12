@@ -20,11 +20,21 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: <Private> <Dashboard /> </Private>,
+        element: (
+          <Private>
+            {" "}
+            <Dashboard />{" "}
+          </Private>
+        ),
       },
       {
         path: "/dashboard/new",
-        element: <Private> <NewCar /> </Private>,
+        element: (
+          <Private>
+            {" "}
+            <NewCar />{" "}
+          </Private>
+        ),
       },
       {
         path: "/car/:id",

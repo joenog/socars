@@ -1,7 +1,9 @@
+import { useEffect, useContext } from "react";
 import { Container } from "../../components/container";
 import logoImg from "../../assets/socars-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/input";
+import { AuthContext } from "../../components/context/AuthContext";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -13,10 +15,11 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import { useEffect } from "react";
 
 export default function Register() {
   const navigate = useNavigate();
+  const { handleInfoUser } = useContext(AuthContext);
+
   const schema = z.object({
     name: z.string().min(1, "O campo nome é obrigatório!"),
     email: z
@@ -52,6 +55,12 @@ export default function Register() {
       .then(async (user) => {
         await updateProfile(user.user, {
           displayName: data.name,
+        });
+        //REFRESH new USER DATA
+        handleInfoUser({
+          uid: user.user.uid,
+          name: data.name,
+          email: data.email,
         });
       })
       .catch((err) => {

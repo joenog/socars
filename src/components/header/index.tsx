@@ -5,7 +5,7 @@ import logoImg from "../../assets/socars-logo.png";
 import { FiUser, FiLogIn } from "react-icons/fi";
 
 export default function Header() {
-  const { signed, loadingAuth, user} = useContext(AuthContext);
+  const { signed, loadingAuth, user } = useContext(AuthContext);
 
   return (
     <div className="w-full fixed flex justify-center items-center bg-white drop-shadow-sm drop-shadow-gray-200 mb-4 z-50">
@@ -15,7 +15,7 @@ export default function Header() {
         </Link>
         {!loadingAuth && signed && (
           <Link className="flex gap-3" to={"/dashboard"}>
-           {user?.name} <FiUser size={25} />
+            {user?.name} <FiUser size={25} />
           </Link>
         )}
 

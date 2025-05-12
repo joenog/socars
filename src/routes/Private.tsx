@@ -9,12 +9,12 @@ interface PrivateProps {
 export function Private({ children }: PrivateProps) {
   const { loadingAuth, signed } = useContext(AuthContext);
 
-  if(loadingAuth) {
-    return <div>CARREGANDO ...</div>
+  if (loadingAuth) {
+    return <div>CARREGANDO ...</div>;
   }
 
-  if(!signed) {
-    return <Navigate to={"/login"}/>
+  if (!signed) {
+    return <Navigate to={"/login"} />;
   }
 
   return children;
