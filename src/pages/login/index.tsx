@@ -83,7 +83,7 @@ export default function Login() {
             />
           </div>
 
-          <button className="w-full p-2 bg-gray-800 rounded-md text-white">
+          <button className="w-full p-2 bg-gray-800 rounded-md text-white cursor-pointer">
             Acessar
           </button>
         </form>

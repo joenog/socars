@@ -113,7 +113,7 @@ export default function Register() {
             />
           </div>
 
-          <button className="w-full p-2 bg-gray-600 rounded-md text-white">
+          <button className="w-full p-2 bg-gray-600 rounded-md text-white cursor-pointer">
             Registrar
           </button>
         </form>
