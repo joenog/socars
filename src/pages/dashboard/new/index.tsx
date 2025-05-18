@@ -8,8 +8,8 @@ import {
   ref,
   uploadBytes,
   getDownloadURL,
-  deleteObject
-} from "firebase/storage"
+  deleteObject,
+} from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 
 import { useForm } from "react-hook-form";
@@ -37,15 +37,15 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 interface ImageItemProps {
-  uid: string,
-  name: string,
-  previewUrl: string,
-  url: string
+  uid: string;
+  name: string;
+  previewUrl: string;
+  url: string;
 }
 
 export default function New() {
   const { user } = useContext(AuthContext);
-  const [ carImages, setCarImages ] = useState<ImageItemProps[]>([])
+  const [carImages, setCarImages] = useState<ImageItemProps[]>([]);
 
   const {
     register,
@@ -58,18 +58,18 @@ export default function New() {
   });
 
   function onSubmit(data: FormData) {
-    if(carImages.length === 0) {
+    if (carImages.length === 0) {
       alert("Adicione imagens antes de enviar!");
       return;
     }
 
-    const carListImage = carImages.map( car => {
+    const carListImage = carImages.map((car) => {
       return {
         uid: car.uid,
         name: car.name,
-        url: car.url
-      }
-    })
+        url: car.url,
+      };
+    });
     //adcionando novo carro completo ao DB
     addDoc(collection(db, "cars"), {
       name: data.name,
@@ -83,17 +83,17 @@ export default function New() {
       created: new Date(),
       owner: user?.name,
       uid: user?.uid,
-      images: carListImage
+      images: carListImage,
     })
-    .then(() => {
-      reset();
-      setCarImages([]);
-      console.log("Carro adicionado!");
-    })
-    .catch((err) => {
-      console.log(err);
-      console.log("Erro ao cadastrar no banco de dados!");
-    })
+      .then(() => {
+        reset();
+        setCarImages([]);
+        console.log("Carro adicionado!");
+      })
+      .catch((err) => {
+        console.log(err);
+        console.log("Erro ao cadastrar no banco de dados!");
+      });
   }
 
   function handleFile(e: ChangeEvent<HTMLInputElement>) {
@@ -103,8 +103,7 @@ export default function New() {
       if (image.type === "image/jpeg" || image.type === "image/png") {
         handleUpload(image);
       } else {
-
-        alert("Envie uma imagem válida!")
+        alert("Envie uma imagem válida!");
         return;
       }
     }
@@ -112,43 +111,41 @@ export default function New() {
 
   //subindo images to storage/firebase
   async function handleUpload(image: File) {
-    if(!user?.uid) {
-      alert("Não ha usuarios, nao pode enviar imagem")
+    if (!user?.uid) {
+      alert("Não ha usuarios, nao pode enviar imagem");
       return;
     }
 
     const currentUid = user?.uid;
-    const uidImage = uuidV4()
+    const uidImage = uuidV4();
 
     const uploadRef = ref(storage, `image/${currentUid}/${uidImage}`);
-    uploadBytes(uploadRef, image)
-    .then((snapshot) => {
+    uploadBytes(uploadRef, image).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((downLoadUrl) => {
         const ImageItem = {
           name: uidImage,
           uid: currentUid,
           previewUrl: URL.createObjectURL(image),
-          url: downLoadUrl
-        }
+          url: downLoadUrl,
+        };
 
-        setCarImages((images)=> [...images, ImageItem])
-      })
-    })
+        setCarImages((images) => [...images, ImageItem]);
+      });
+    });
   }
 
   async function handleDeleteImage(item: ImageItemProps) {
-    const imagePath =  `image/${item.uid}/${item.name}`;
+    const imagePath = `image/${item.uid}/${item.name}`;
 
     const imageRef = ref(storage, imagePath);
 
     try {
       await deleteObject(imageRef);
-      setCarImages(carImages.filter((car) => car.url !== item.url))
+      setCarImages(carImages.filter((car) => car.url !== item.url));
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
-
 
   return (
     <Container>
@@ -168,17 +165,22 @@ export default function New() {
           </div>
         </button>
 
-        {carImages.map( item => (
-          <div key={item.name} className="w-full flex h-32 relative items-center justify-center">
-            <button 
+        {carImages.map((item) => (
+          <div
+            key={item.name}
+            className="w-full flex h-32 relative items-center justify-center"
+          >
+            <button
               onClick={() => handleDeleteImage(item)}
-              className="absolute p-2 text-transparent hover:text-red-600 hover:bg-amber-50 rounded-xl">
-              <FiTrash  size={25} /> 
+              className="absolute p-2 text-transparent hover:text-red-600 hover:bg-amber-50 rounded-xl"
+            >
+              <FiTrash size={25} />
             </button>
-            <img 
+            <img
               className="rounded-md w-full h-32 object-cover"
-              src={item.previewUrl} 
-              alt="foto-do-carro" />
+              src={item.previewUrl}
+              alt="foto-do-carro"
+            />
           </div>
         ))}
       </div>
