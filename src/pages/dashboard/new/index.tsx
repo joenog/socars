@@ -14,7 +14,7 @@ import { collection, addDoc } from "firebase/firestore";
 
 import { useForm } from "react-hook-form";
 import Input from "../../../components/input";
-import { date, z } from "zod";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthContext } from "../../../components/context/AuthContext";
 
