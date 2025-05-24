@@ -26,7 +26,7 @@ interface CarImageProps {
 export default function Home() {
   const [cars, setCars] = useState<CarProps[]>([]);
   const [loadImages, setLoadImages] = useState<string[]>([]);
-  const [ input, setInput ] = useState<string>();
+  const [ input, setInput ] = useState<string>("");
 
   useEffect(() => {
     loadCars();

@@ -3,6 +3,7 @@ import logoImg from "../../assets/socars-logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../components/input";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -41,13 +42,13 @@ export default function Login() {
 
   function onSubmit(data: FormData) {
     signInWithEmailAndPassword(auth, data.email, data.password)
-      .then((user) => {
-        console.log("Logado com sucesso!");
-        console.log(user);
+      .then(() => {
+        toast.success("Logado com sucesso!")
         navigate("/dashboard", { replace: true });
       })
       .catch((err) => {
         console.log("Erro ao logar!");
+        toast.error("Algo está errado!")
         console.error(err);
       });
   }

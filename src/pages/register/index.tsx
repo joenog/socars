@@ -15,6 +15,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import toast from "react-hot-toast";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -62,9 +63,10 @@ export default function Register() {
           name: data.name,
           email: data.email,
         });
+        toast.success("Sua conta foi criada!")
       })
       .catch((err) => {
-        console.log("Error ao cadastrar o usuário!");
+        toast.error("Error ao cadastrar o usuário!");
         console.error(err);
       });
     console.log("Cadastrado com sucesso!");

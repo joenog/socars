@@ -17,6 +17,7 @@ import Input from "../../../components/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthContext } from "../../../components/context/AuthContext";
+import toast from "react-hot-toast";
 
 const schema = z.object({
   name: z.string().min(1, "O campo nome é obrigatório!"),
@@ -59,7 +60,7 @@ export default function New() {
 
   function onSubmit(data: FormData) {
     if (carImages.length === 0) {
-      alert("Adicione imagens antes de enviar!");
+      toast.error("Adicione ao menos uma imagem!");
       return;
     }
 
@@ -88,10 +89,11 @@ export default function New() {
       .then(() => {
         reset();
         setCarImages([]);
-        console.log("Carro adicionado!");
+        toast.success("Carro adicionado!");
       })
       .catch((err) => {
         console.log(err);
+        toast.error("Erro ao adicionar!")
       });
   }
 
@@ -111,7 +113,7 @@ export default function New() {
   //subindo images to storage/firebase
   async function handleUpload(image: File) {
     if (!user?.uid) {
-      alert("Não ha usuarios, nao pode enviar imagem");
+      toast.error("Não há usuarios, não pode enviar imagem!");
       return;
     }
 
