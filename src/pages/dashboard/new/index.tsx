@@ -72,7 +72,7 @@ export default function New() {
     });
     //adcionando novo carro completo ao DB
     addDoc(collection(db, "cars"), {
-      name: data.name,
+      name: data.name.toUpperCase(),
       model: data.model,
       year: data.year,
       km: data.km,
@@ -92,7 +92,6 @@ export default function New() {
       })
       .catch((err) => {
         console.log(err);
-        console.log("Erro ao cadastrar no banco de dados!");
       });
   }
 

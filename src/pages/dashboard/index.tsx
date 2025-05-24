@@ -23,6 +23,7 @@ interface CarProps {
   city: string;
   km: string;
   images: CarImageProps[];
+  created: string,
 }
 
 interface CarImageProps {
@@ -54,6 +55,7 @@ export default function Dashboard() {
             price: doc.data().price,
             images: doc.data().images,
             uid: doc.data().uid,
+            created: doc.data().created,
           });
         });
         setCars(listCars);
@@ -111,6 +113,9 @@ export default function Dashboard() {
             <div className="flex flex-col px-2 pb-2">
               <span className="text-zinc-700">
                 Ano {item.year} | {item.km} km
+              </span>
+              <span>
+                {Number(item.created)}
               </span>
             </div>
             <strong className="text-black mx-2 text-xl">
