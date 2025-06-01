@@ -47,7 +47,6 @@ export default function Login() {
         navigate("/dashboard", { replace: true });
       })
       .catch((err) => {
-        console.log("Erro ao logar!");
         toast.error("Algo está errado!")
         console.error(err);
       });
@@ -71,6 +70,7 @@ export default function Login() {
               name="email"
               error={errors.email?.message}
               register={register}
+              rules={{required: "O campo é obrigatória"}}
             />
           </div>
 
@@ -81,6 +81,7 @@ export default function Login() {
               name="password"
               error={errors.password?.message}
               register={register}
+              rules={{required: "O campo é obrigatória"}}
             />
           </div>
 

@@ -5,3 +5,4 @@ export function Container({ children }: { children: ReactNode }) {
     <div className="w-full max-w-7xl mx-auto px-4 pt-20 fadeIn">{children}</div>
   );
 }
+// component container usado par aexbiir de uma forma padrão o layout de um projeto

@@ -13,6 +13,7 @@ import {
 import { db, storage } from "../../services/firebase/firebaseConnection";
 import { AuthContext } from "../../components/context/AuthContext";
 import { ref, deleteObject } from "firebase/storage";
+import toast from "react-hot-toast";
 
 interface CarProps {
   id: string;
@@ -69,6 +70,7 @@ export default function Dashboard() {
     const docRef = doc(db, "cars", car.id);
     await deleteDoc(docRef);
 
+    toast.success("Carro deletado!")
     // Deletando imagens do storage com Promise.all
     await Promise.all(
       car.images.map(async (image) => {
@@ -78,6 +80,7 @@ export default function Dashboard() {
           await deleteObject(imageRef);
           // Remove o carro da useState
           setCars(cars.filter((item) => item.id !== car.id));
+
         } catch (err) {
           console.error("Erro ao excluir imagem:", err);
         }

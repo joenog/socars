@@ -6,7 +6,6 @@ import { db } from "../../services/firebase/firebaseConnection";
 import { FiPhoneIncoming } from "react-icons/fi";
 import { Swiper, SwiperSlide } from "swiper/react"
 
-
 interface CarProps {
   id: string;
   name: string;
@@ -31,12 +30,12 @@ interface CarImageProps {
 
 export default function CarDetail() {
   const { id } = useParams();
-  const [car, setCar] = useState<CarProps | null>(null);
+  const [ car, setCar ] = useState<CarProps | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function loadCar() {
-      if (!id) { return;}
+      if (!id) { return; }
 
       const docRef = doc(db, "cars", id);
       getDoc(docRef)

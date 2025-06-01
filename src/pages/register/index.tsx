@@ -92,6 +92,7 @@ export default function Register() {
               name="name"
               error={errors.name?.message}
               register={register}
+              rules={{required: "O campo é obrigatória"}}
             />
           </div>
 
@@ -102,6 +103,7 @@ export default function Register() {
               name="email"
               error={errors.email?.message}
               register={register}
+              rules={{required: "O campo é obrigatória"}}
             />
           </div>
 
@@ -112,6 +114,7 @@ export default function Register() {
               name="password"
               error={errors.password?.message}
               register={register}
+              rules={{required: "O campo é obrigatória"}}
             />
           </div>
 

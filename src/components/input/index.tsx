@@ -1,5 +1,4 @@
 import type {
-  FieldValues,
   RegisterOptions,
   UseFormRegister,
 } from "react-hook-form";
@@ -8,7 +7,7 @@ interface InputProps {
   type: string;
   placeholder: string;
   name: string;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<any>;
   error?: string;
   rules: RegisterOptions;
 }
